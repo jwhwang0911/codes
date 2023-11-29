@@ -6,6 +6,7 @@ import numpy
 
 data = pd.read_excel("../데이터.xlsx")
 save_path = "../processed_datas.npy"
+origin_save_path = "../origin_datas.npy"
 print("Read all datas")
 
 
@@ -87,6 +88,40 @@ def construct_numpy():
         np_dict.append(temp)
     
     return np.array(np_dict)
+
+def construct_orogin_numpy():
+    print("Construct numpy")
+    np_dict = []
+
+    for idx in range(11463):
+        temp = []
+        print("\r{}th data fin.".format(idx), end = "")
+        for key in important_discrete_att:
+            elem = data.loc[idx]
+            # print(discrete_transform(key,elem[key]), end="\t")
+            try:
+                temp.append(discrete_transform(key, elem[key]))
+            except:
+                temp.append(-100.0)
+        for key in important_numeric_att:
+            elem = data.loc[idx]
+            try:
+                temp.append(elem[key])
+            except:
+                temp.append(-100.0)
+            # print(elem[key], end="\t")
+        for key in log_transform:
+            elem = data.loc[idx]
+            # print(for_log(elem[key]), end="\t")
+            try:
+                temp.append(for_log(elem[key]))
+            except:
+                temp.append(-100.0)
+        print(len(temp))
+        np_dict.append(temp)
+    
+    return np.array(np_dict)
+
 
 def load_data():
     load_dict = np.load(save_path)

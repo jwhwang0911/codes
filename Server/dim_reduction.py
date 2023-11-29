@@ -59,7 +59,7 @@ def load_agglo(c: int):
     return n['X'], n['Y'] 
 
 def load_gmm(c: int):
-    n = np.load("../cluster/gaussian/{}_clus.npz".format(c), allow_pickle=True)
+    n = np.load("{}_clus.npz".format(c), allow_pickle=True)
     return n['X'], n['Y'] 
 
 def load_Unlabeled():
@@ -197,6 +197,8 @@ class dataset():
         
         print(indexs)
         
+        return indexs
+        
         pass
             
     def means(self):
@@ -217,6 +219,10 @@ class dataset():
                 else:
                     if min_list[i] >= feat:
                         min_list[i] = feat
+
+        print(mean_list)
+        print(max_list)
+        print(min_list)
             
         
 t = dataset(class_num= 5,cluster="gaussian")
